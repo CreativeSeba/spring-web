@@ -22,8 +22,8 @@ public class DbRepository {
                 BeanPropertyRowMapper.newInstance(Product.class)
         );
     }
-    public List<Product> getProductById(int id) {
-        return jt.query(
+    public Product getProductById(int id) {
+        return jt.queryForObject(
                 "SELECT * FROM products WHERE id = " + id,
                 BeanPropertyRowMapper.newInstance(Product.class)
         );

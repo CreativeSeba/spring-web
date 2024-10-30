@@ -4,6 +4,7 @@ import com.example.firstspringproject.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
@@ -26,20 +27,16 @@ public class MainController {
         return "products";//pokaz HTML
     }
 
-
-
-
-
+    @GetMapping("/products/{id}")
+    public String product(@PathVariable int id, Model m) {
+        Product product = dr.getProductById(id);
+        m.addAttribute("product", product);
+        return "productInfo";
+    }
     @GetMapping("")
     public String mainPage() {
         return "mainShopPage";
     }
-
-
-
-
-
-
 
     @GetMapping("/laptops")
     public String laptops() {
