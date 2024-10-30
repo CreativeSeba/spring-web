@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    header {
+        width: 100%;
+    }
+
+    .baner-img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    nav {
+        background-color: #333;
+        padding: 10px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 10px 20px;
+        display: block;
+    }
+
+    nav ul li a:hover {
+        background-color: #555;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .main-img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+</style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <img
+            src="https://www.pacificenvironment.org/wp-content/uploads/2016/11/pacific-ocean-wallpapers-hd-1-1920x300.jpg"
+            alt="Baner" class="baner-img">
+</header>
+<nav>
+    <ul>
+        <li><a href="../">Główna</a></li>
+        <li><a href="products">Produkty</a></li>
+        <li><a href="laptops">Laptopy</a></li>
+        <li><a href="phones">Smartfony</a></li>
+        <li><a href="contacts">Kontakt</a></li>
+    </ul>
+</nav>
+
+
+<main>
+    <img width="900px" th:src="@{/images/baner1.png}" alt="testBaner">
+</main>
+
+
+<footer>
+    <p>&copy; 2024 Firma. Wszelkie prawa zastrzeżone.</p>
+</footer>
+</body>
+</html>
