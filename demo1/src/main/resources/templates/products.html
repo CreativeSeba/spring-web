@@ -4,83 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sklep</title>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: Arial, sans-serif;
-    }
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-    header {
-        width: 100%;
-    }
+        header {
+            width: 100%;
+        }
 
-    .baner-img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
+        .baner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    nav {
-        background-color: #333;
-        padding: 10px;
-    }
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
 
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-    }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+        }
 
-    nav ul li {
-        margin: 0 15px;
-    }
+        nav ul li {
+            margin: 0 15px;
+        }
 
-    nav ul li a {
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        padding: 10px 20px;
-        display: block;
-    }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+        }
 
-    nav ul li a:hover {
-        background-color: #555;
-    }
+        nav ul li a:hover {
+            background-color: #555;
+        }
 
-    main {
-        display: flex;
-        justify-content: center;
-        margin: 20px 0;
-    }
+        main {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
 
-    .main-img {
-        max-width: 100%;
-        height: auto;
-    }
+        .main-img {
+            max-width: 100%;
+            height: auto;
+        }
 
-    footer {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-    }
-
-</style>
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        oper{
+            border: black 5px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            display: flex;
+        }
+    </style>
 </head>
 <body>
 
 <header>
 
 
-    <img src="https://www.pacificenvironment.org/wp-content/uploads/2016/11/pacific-ocean-wallpapers-hd-1-1920x300.jpg" alt="Baner" class="baner-img">
+    <img src="https://www.pacificenvironment.org/wp-content/uploads/2016/11/pacific-ocean-wallpapers-hd-1-1920x300.jpg"
+         alt="Baner" class="baner-img">
 </header>
 
 <nav>
@@ -93,19 +100,34 @@
     </ul>
 </nav>
 
+<div class="oper">
+    <div class="add">
+        <button>Dodaj</button>
+    </div>
+    <div class="delete">
+        <button>Usuń</button>
+    </div>
+    <div class="update">
+        <button>Zaktualizuj</button>
+    </div>
+    <div class="superUpdate">
+
+    </div>
+</div>
 
 <main style="display: flex; flex-direction: column; width: 100%">
 
-    <div th:each="product: ${lista}" style="margin: auto; width: 50%; display: flex; flex-direction: column; border: 2px solid black">
+    <div th:each="product: ${lista}"
+         style="margin: auto; width: 50%; display: flex; flex-direction: column; border: 2px solid black">
         <a th:href="@{/products/{id}(id=${product.id})}">
-        <td th:text="${product.id}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
-        <td th:text="${product.description}"></td>
-        <td>
-            <img th:src="${product.img}" alt="Product Image" style="width:100px; height:auto;"/>
-        </td>
-        <td th:text="${product.categoryId}"></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.description}"></td>
+            <td>
+                <img th:src="${product.img}" alt="Product Image" style="width:100px; height:auto;"/>
+            </td>
+            <td th:text="${product.categoryId}"></td>
         </a>
     </div>
 

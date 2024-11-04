@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
-
-
-
-
-
 @Controller
 public class MainController {
     //new MainController(new DbRepository());
