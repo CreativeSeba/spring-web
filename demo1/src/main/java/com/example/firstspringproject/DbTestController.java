@@ -34,4 +34,12 @@ public class DbTestController {
         //return dr.getProductById(requestResult);
         return dr.insertProduct(product);
     }
+    @PostMapping("/api/products/delete/{id}")
+    public int deleteProduct(@PathVariable int id) {
+        return dr.deleteProduct(id);
+    }
+    @PostMapping("/api/products/update")
+    public int updateProduct(@RequestBody Product product) {
+        return dr.updateProduct(product);
+    }
 }
