@@ -1,7 +1,5 @@
 package com.example.firstspringproject;
 
-import com.example.firstspringproject.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -43,15 +41,41 @@ public class DbRepository {
         );
     }
 
-    public int updateProduct(Product product) {
+    public int insertMultiple(List<Product> products) {
+        // SQL query to insert a single product
+        String sql = "INSERT INTO products (name, price, description, img, category_id) VALUES (?, ?, ?, ?, ?)";
+
+        // Prepare the parameters for each product
+        List<Object[]> batchArgs = new ArrayList<>(); //Object to typ danych ktory moze byc kazdym prymitywnym typem danch, uzywamy listy Objects w liscie, zeby kazdy indeks list mial wszystkie informacje do updatu
+
+        for (Product product : products) {
+            // Create an Object[] for each product containing the values to be inserted
+            Object[] params = new Object[]{
+                    product.getName(),
+                    product.getPrice(),
+                    product.getDescription(),
+                    product.getImg(),
+                    product.getCategoryId()
+            };
+
+            // Add to batch
+            batchArgs.add(params);
+        }
+
+        // Execute the batch update
+        return jt.batchUpdate(sql, batchArgs).length;  // zwracamy liczbe wierszy ktore zostaly zmienione
+    }
+
+
+    public int updateProduct(Product product, int id) {
         return jt.update(
-            "UPDATE products SET name = ?, price = ?, description = ?, img = ?, category_id = ? WHERE id = ?",
+                "UPDATE products SET name = ?, price = ?, description = ?, img = ?, category_id = ? WHERE id = ?",
                 product.getName(),
                 product.getPrice(),
                 product.getDescription(),
                 product.getImg(),
                 product.getCategoryId(),
-                product.getId()
+                id
         );
     }
 

@@ -26,20 +26,18 @@ public class DbTestController {
     }
     @PostMapping("/api/products")
     public int insertProduct(@RequestBody Product product) {
-        int requestResult = dr.insertProduct(product);
-//        if (requestResult == 1) {
-//            return "Inserted product successfully";
-//        }
-//        return "Insertion failed";
-        //return dr.getProductById(requestResult);
         return dr.insertProduct(product);
     }
-    @PostMapping("/api/products/delete/{id}")
+    @PostMapping("/api/products/multiple")
+    public int insertMultiple(@RequestBody List<Product> products) {
+        return dr.insertMultiple(products);
+    }
+    @DeleteMapping("/api/products/{id}")
     public int deleteProduct(@PathVariable int id) {
         return dr.deleteProduct(id);
     }
-    @PostMapping("/api/products/update")
-    public int updateProduct(@RequestBody Product product) {
-        return dr.updateProduct(product);
+    @PutMapping("/api/products/{id}")
+    public int updateProduct(@PathVariable int id, @RequestBody Product product) {
+        return dr.updateProduct(product, id);
     }
 }
