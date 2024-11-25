@@ -3,6 +3,7 @@ package com.example.firstspringproject;
 import com.example.firstspringproject.DbRepository;
 import com.example.firstspringproject.Product;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 @RestController
@@ -16,7 +17,7 @@ public class DbTestController {
         return dr.getAllProducts();
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/api/product")
     public List<Product> getAll() {
         return dr.getAllProducts();
     }
@@ -24,10 +25,20 @@ public class DbTestController {
     public Product getProduct(@PathVariable int id) {
         return dr.getProductById(id);
     }
+
     @PostMapping("/api/products")
-    public int insertProduct(@RequestBody Product product) {
-        return dr.insertProduct(product);
+    public ModelAndView insertProduct(@ModelAttribute Product product) {
+        dr.insertProduct(product);
+        return new ModelAndView("redirect:/products");
     }
+
+    @PostMapping("/api/products2")
+    public Product insertProduct2(@ModelAttribute Product product) {
+        return product;
+    }
+
+
+
     @PostMapping("/api/products/multiple")
     public int insertMultiple(@RequestBody List<Product> products) {
         return dr.insertMultiple(products);
