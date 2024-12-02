@@ -99,6 +99,11 @@
         input, textarea {
             width: 80%;
         }
+        /* Example CSS for error class */
+        .error {
+            border: 2px solid red;
+
+        }
     </style>
 </head>
 <body>
@@ -194,7 +199,7 @@
     document.getElementById("updateForm").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form from submitting normally
 
-        const formData = new FormData(this);
+        const formData = new FormData(event.target);
         const productId = formData.get("id");
 
         // Check if the product ID exists
@@ -238,8 +243,8 @@
             });
     });
 
-    document.querySelector('#updateForm input[name="id"]').addEventListener('input', function () {
-        const productId = this.value; // Get the entered ID
+    document.querySelector('#updateForm input[name="id"]').addEventListener('input', function (event) { //event to akcja jaka rozpoznaje przegladarka
+        const productId = event.target.value; // 'this' refers to the input element that triggered the event
 
         // If the input field is empty, clear the form fields
         if (!productId) {
@@ -251,7 +256,7 @@
         fetch(`/api/product/${productId}`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Product not found.');
+                    throw new Error('Product not found.'); // przerywa normalne dzialanie programu i szuka catcha i jesli go nie ma to prgram sie skonczy
                 }
                 return response.json(); // Parse the JSON response
             })
@@ -266,7 +271,7 @@
                 // Remove error state if the product is found
                 clearError();
             })
-            .catch(error => {
+            .catch(error => { // ma obiekt ktory zostal thrown
                 console.error('Error:', error);
                 alert('Could not load product. Make sure the product ID exists.');
 
@@ -285,6 +290,7 @@
     }
 
     // Function to show error indication (e.g., red borders)
+    // Function to show error indication (e.g., red borders)
     function showError() {
         document.querySelector('#updateForm').classList.add('error');
         document.querySelector('#updateForm input[name="id"]').classList.add('error');
@@ -292,9 +298,11 @@
 
     // Function to clear error indication
     function clearError() {
-        document.querySelector('#updateForm').classList.remove('error');
-        document.querySelector('#updateForm input[name="id"]').classList.remove('error');
+        const form = document.querySelector('#updateForm');
+        form.classList.remove('error');
+        form.querySelector('input[name="id"]').classList.remove('error');
     }
+
 
 
 </script>
