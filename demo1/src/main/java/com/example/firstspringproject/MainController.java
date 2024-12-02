@@ -25,7 +25,7 @@ public class MainController {
     @GetMapping("/products/{id}")
     public String product(@PathVariable int id, Model m) {
         Product product = dr.getProductById(id);
-        m.addAttribute("product", product);
+        m.addAttribute("product", product); // to dodaje do modelu, wiec thymeleaf widzi
         return "productInfo";
     }
     @GetMapping("")

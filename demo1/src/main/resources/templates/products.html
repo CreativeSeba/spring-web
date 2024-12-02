@@ -121,7 +121,7 @@
 </nav>
 
 <h2>POST</h2>
-<form id="postForm" action="/api/products" method="post">
+<form id="postForm" action="/api/products/redirect" method="post">
     <input name="name" type="text" placeholder="Product name" required><br>
     <input name="price" type="number" placeholder="Price" required><br>
     <textarea name="description" placeholder="Description" required></textarea><br>
@@ -130,6 +130,7 @@
     <input type="submit" value="Add product">
 </form>
 <br>
+
 <h2>DELETE</h2>
 <form id="deleteForm">
     <input name="id" type="number" placeholder="Enter Product ID to delete" required><br>
@@ -142,21 +143,36 @@
 
         const productId = document.querySelector('input[name="id"]').value;
 
-        fetch(`/api/products/${productId}`, {
-            method: 'DELETE', // HTTP DELETE method
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        // Check if the product ID exists
+        fetch(`/api/product/${productId}`)
             .then(response => {
-                if (response.ok) {
-                    alert("Product deleted successfully.");
-                    location.reload();  // Refresh the page to reflect the changes
-                } else {
-                    alert("Failed to delete product.");
+                if (!response.ok) {
+                    throw new Error('Product not found.');
                 }
+                return response.json(); // Parse the JSON response
             })
-            .catch(error => console.error('Error:', error));
+            .then(product => {
+                // Proceed with the delete if the product exists
+                fetch(`/api/products/${productId}`, {
+                    method: 'DELETE', // HTTP DELETE method
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Product deleted successfully.");
+                            location.reload();  // Refresh the page to reflect the changes
+                        } else {
+                            alert("Failed to delete product.");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Could not delete product. Make sure the product ID exists.');
+            });
     });
 </script>
 
@@ -181,30 +197,45 @@
         const formData = new FormData(this);
         const productId = formData.get("id");
 
-        const product = {
-            name: formData.get("name"),
-            price: formData.get("price"),
-            description: formData.get("description"),
-            img: formData.get("img"),
-            categoryId: formData.get("categoryId")
-        };
-
-        fetch(`/api/products/${productId}`, {
-            method: 'PUT', // HTTP PUT method
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(product) // Convert the product object to JSON
-        })
+        // Check if the product ID exists
+        fetch(`/api/product/${productId}`)
             .then(response => {
-                if (response.ok) {
-                    alert("Product updated successfully.");
-                    location.reload();  // Refresh the page to reflect the changes
-                } else {
-                    alert("Failed to update product.");
+                if (!response.ok) {
+                    throw new Error('Product not found.');
                 }
+                return response.json(); // Parse the JSON response
             })
-            .catch(error => console.error('Error:', error));
+            .then(product => {
+                // Proceed with the update if the product exists
+                const updatedProduct = {
+                    name: formData.get("name"),
+                    price: formData.get("price"),
+                    description: formData.get("description"),
+                    img: formData.get("img"),
+                    categoryId: formData.get("categoryId")
+                };
+
+                fetch(`/api/products/${productId}`, {
+                    method: 'PUT', // HTTP PUT method
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedProduct) // Convert the product object to JSON
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Product updated successfully.");
+                            location.reload();  // Refresh the page to reflect the changes
+                        } else {
+                            alert("Failed to update product.");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Could not update product. Make sure the product ID exists.');
+            });
     });
 
     document.querySelector('#updateForm input[name="id"]').addEventListener('input', function () {
@@ -224,7 +255,7 @@
                 }
                 return response.json(); // Parse the JSON response
             })
-            .then(product => {
+            .then(product => { // to jest json
                 // Populate the form fields with the fetched data
                 document.querySelector('#updateForm input[name="name"]').value = product.name || '';
                 document.querySelector('#updateForm input[name="price"]').value = product.price || '';

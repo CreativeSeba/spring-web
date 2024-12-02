@@ -12,10 +12,6 @@ public class DbTestController {
     public DbTestController(DbRepository dr) {
         this.dr = dr;
     }
-    @GetMapping("/dbtest")
-    public List<Product> dbTest() {
-        return dr.getAllProducts();
-    }
 
     @GetMapping("/api/product")
     public List<Product> getAll() {
@@ -26,14 +22,14 @@ public class DbTestController {
         return dr.getProductById(id);
     }
 
-    @PostMapping("/api/products")
-    public ModelAndView insertProduct(@ModelAttribute Product product) {
+    @PostMapping("/api/products/redirect")
+    public ModelAndView insertProductRedirect(@ModelAttribute Product product) {
         dr.insertProduct(product);
         return new ModelAndView("redirect:/products");
     }
 
-    @PostMapping("/api/products2")
-    public Product insertProduct2(@ModelAttribute Product product) {
+    @PostMapping("/api/products")
+    public Product insertProduct(@ModelAttribute Product product) {
         return product;
     }
 
